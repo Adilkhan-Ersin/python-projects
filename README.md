@@ -7,10 +7,10 @@ This repository contains my Python and Web projects coursework from **CS50P (Int
   - `small/` – Small problem sets and exercises  
   - `final/` – Final project  
 
-- `cs50web-django/` – Projects from CS50’s Web Programming with Python and JavaScript  
-  - `small/` – Five Django mini-projects  
+- `cs50w/` – Projects from CS50’s Web Programming with Python and JavaScript  
+  - `small/` – Mini-projects  
   - `final/` – Final project  
 
 ## 🚀 Highlights  
 - CS50P Final Project: [Graphing calculator](/cs50p/final/)
-- CS50Web Final Project: [Financial Tracker Project](/cs50w/final/)
+- CS50W Final Project: [Financial Tracker Project](/cs50w/final/)
