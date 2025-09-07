@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <h2 style="margin: 3% 0 0 3%;">Active Listings</h2>
+    <form action="{% url 'displayCategory' %}" method="POST" class="my-3">
+        {% csrf_token %}
+        <label style="margin-left: 3%;" for="category">Choose a category:</label>
+          <select class="form-select" aria-label="Default select example" name="category" id="category">
+            {% for cat in categories %}
+              <option value="{{ cat }}">{{ cat }}</option>
+            {% endfor %}
+          </select>
+        <button type="submit" class="btn btn-outline-info">Select</button>
+    </form>
+    <div style="margin: 2%;" class="row row-cols-2 justify-content-around cardscontainer">
+      {% for listing in listings %}
+        <div class="card mb-3 shadow" style="max-width: 600px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{ listing.imageUrl }}" class="img-fluid rounded-start" alt="{{ listing.title }}">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ listing.title }}</h5>
+                <p class="card-text">{{ listing.description }}</p>
+                <p class="card-text">${{ listing.price.bid }}</p>
+                <a href="{% url 'listing' id=listing.id %}" class="btn btn-outline-info align-bottom">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+{% endblock %}

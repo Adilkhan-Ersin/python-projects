@@ -1,0 +1,250 @@
+{% extends 'dashboard/layout.html' %}
+{% load static %}
+{% block content %}
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+      <!-- Modal Goals -->
+      <div class="modal fade" id="staticBackdropGoal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropGoalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title fs-1" id="staticBackdropGoalLabel">Add Goal</h3>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="{% url 'submit_goal' %}">
+                {% csrf_token %}
+                <div class="mb-3 d-flex justify-content-between">
+                  <label for="goal_name" class="col-form-label">Name:</label>
+                  <input type="textarea" class="form-control w-75" name="goal_name" id="goal_name">
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                  <label for="goal_amount" class="col-form-label">Amount:</label>
+                  <input type="number" class="form-control w-75" name="goal_amount" id="goal_amount">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal income/expense -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title fs-1" id="staticBackdropLabel">Add New</h3>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="{% url 'submit_transaction' %}">
+                {% csrf_token %}
+                <div class="mb-3 d-flex justify-content-between">
+                  <label for="income" class="col-form-label">Income:</label>
+                  <input type="number" class="form-control w-75" name="income" id="income">
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                  <label for="expense" class="col-form-label">Expense:</label>
+                  <input type="number" class="form-control w-75" name="expense" id="expense">
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                  <label for="description" class="col-form-label">Description:</label>
+                  <input type="textarea" class="form-control w-75" name="description" id="description">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Content Row -->
+      <div class="row d-flex justify-content-center">
+      
+          <!-- Income Card Example -->
+          <div class="col-xl-3 in col-md-6 mb-4">
+              <div class="card bg-success h-100 py-2">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                  Income</div>
+                              <div class="h5 mb-0 font-weight-bold text-dark">${{ total_income }}</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        
+          <!-- Expense Card Example -->
+          <div class="col-xl-3 ex col-md-6 mb-4">
+              <div class="card bg-danger h-100 py-2">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                  Expense</div>
+                              <div class="h5 mb-0 font-weight-bold text-dark">${{ total_expense }}</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        
+          <!-- Total Card Example -->
+          <div class="col-xl-3 to col-md-6 mb-4">
+              <div class="card bg-info h-100 py-2">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2 to-text">
+                              <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                  Total</div>
+                              <div class="h5 mb-0 font-weight-bold text-dark">${{ total_amount }}</div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    
+      <!-- Content Row -->
+      <div class="row">
+          <!-- Area Chart -->
+          <div class="col-xl-8 col-lg-7">
+              <div class="card mb-4">
+                  <!-- Card Header - Dropdown -->
+                  <div
+                      class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-dark">Earnings/Expenses Overview</h6>
+                      <div class="dropdown no-arrow">
+                          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-ellipsis-v fa-sm fa-fw text-dark"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right animated--fade-in"
+                              aria-labelledby="dropdownMenuLink">
+                              <div class="dropdown-header">Go to:</div>
+                              <a class="dropdown-item" href="{% url 'tables' %}">Table</a>
+                              <a class="dropdown-item" href="{% url 'charts' %}">Charts</a>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Card Body -->
+                  <div class="card-body">
+                      <div class="chart-area">
+                          <canvas id="myAreaChart"></canvas>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+            <!-- Project Card Example -->
+            <div class="col-xl-4 col-lg-5">
+            <div class="card mb-4">
+              <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-dark">Goals</h6>
+              </div>
+              <div class="card-body">
+                {% for goal in goals_with_progress %}
+                <div id="goal-{{ goal.goal_id }}">
+                  <h4 class="small font-weight-bold">{{ goal.goal_name }}<span class="float-right">{% if goal.current_progress == 100 %}Goal Completed!{% else %}{{ goal.current_progress }}%{% endif %}</span></h4>
+                  <div class="progress mb-2">
+                      <div class="progress-bar" role="progressbar" style="width: {{ goal.current_progress }}%; background: {{ goal.color }};"
+                          aria-valuenow="{{ goal.current_progress }}" aria-valuemin="0" aria-valuemax="100">
+                      </div>
+                  </div>
+                  <div class="d-flex justify-content-end py-2">
+                    <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-dark mr-2" data-bs-toggle="modal" data-bs-target="#editGoal{{ goal.goal_id }}">Edit</button>
+                    <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-danger mr-2" data-bs-toggle="modal" data-bs-target="#deleteGoal{{ goal.goal_id }}">Delete</button>
+                  </div>
+                </div>
+                <!-- Modal edit Goals -->
+                <div class="modal fade" id="editGoal{{ goal.goal_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropGoalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h3 class="modal-title fs-1" id="editGoalLabel">Edit Goal</h3>
+                      </div>
+                      <div class="modal-body">
+                          <div class="mb-3 d-flex justify-content-between">
+                            <label for="goal_name" class="col-form-label">Name:</label>
+                            <input type="textarea" class="form-control w-75" name="goal_name" value="{{ goal.goal_name }}" id="goal_name_{{ goal.goal_id }}">
+                          </div>
+                          <div class="mb-3 d-flex justify-content-between">
+                            <label for="goal_amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control w-75" name="goal_amount" value="{{ goal.goal_amount }}" id="goal_amount_{{ goal.goal_id }}" required>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" onclick="editGoal({{ goal.goal_id }})">Save changes</button>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Modal delete Goals -->
+                <div class="modal fade" id="deleteGoal{{ goal.goal_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropGoalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h3 class="modal-title fs-1" id="deleteGoalLabel">Delete Goal</h3>
+                      </div>
+                      <div class="modal-body">
+                        <div class="mb-3 d-flex justify-content-between">
+                          <h4 class="col-form-label">Are you sure you want to delete this goal?</h4>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary" onclick="deleteGoal({{ goal.goal_id }})">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+      </div>
+    
+      <!-- Content Row -->
+      <div class="row">
+      
+          <!-- Pie Chart -->
+          <div class="col-lg-7 mb-4">
+          
+            <div class="card mb-4">
+              <!-- Card Header - Dropdown -->
+              <div
+                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-dark">Revenue Sources</h6>
+                  <div class="dropdown no-arrow">
+                      <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v fa-sm fa-fw text-dark"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right animated--fade-in"
+                          aria-labelledby="dropdownMenuLink">
+                          <div class="dropdown-header">Go to:</div>
+                          <a class="dropdown-item" href="{% url 'tables' %}">Table</a>
+                          <a class="dropdown-item" href="{% url 'charts' %}">Charts</a>
+                      </div>
+                  </div>
+              </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                  <div class="chart-pie">
+                      <canvas id="myPieChart"></canvas>
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+  </div>
+{% endblock %}

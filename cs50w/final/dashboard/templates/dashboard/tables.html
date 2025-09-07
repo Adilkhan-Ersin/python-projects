@@ -1,0 +1,59 @@
+{% extends 'dashboard/layout.html' %}
+
+{% block tables %}
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-dark">Table</h1>
+    
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-dark">Earnings/Expenses</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered text-dark" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th style="background-color: #808EFF;">Name</th>
+                            <th class="bg-success">Income</th>
+                            <th class="bg-danger">Expense</th>
+                            <th style="background-color: #FF80B9;">Added date</th>
+                            <th class="bg-info">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.description }}</td>
+                            <td>
+                              {% if transaction.transaction_type == 'IN' %}
+                                ${{ transaction.amount }}
+                              {% else %}
+                                -
+                              {% endif %}
+                            </td>
+                            <td>
+                              {% if transaction.transaction_type == 'EX' %}
+                                ${{ transaction.amount }}
+                              {% else %}
+                                -
+                              {% endif %}
+                            </td>
+                            <td>{{ transaction.date }}</td>
+                            <td>
+                              {% if forloop.first %}
+                                ${{ total_balance }}
+                              {% endif %}
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+{% comment %} Hide navbar {% endcomment %}
+{% block navbar %}
+{% endblock %}
+
+{% block login %}
+  {% comment %} Register page {% endcomment %}
+  {% if message %}
+      <div>{{ message }}</div>
+  {% endif %}
+  
+  <div class="container-fluid row row-cols-2 justify-content-center align-items-center" style="height: 100vh;">
+    <div style="height: 100vh; width: 55vw; display: flex; justify-content: center;">
+      <img class=" p-3" style="max-width: 340px;" src="{% static 'network/N-logo.svg' %}" alt="Logo">
+    </div>
+    
+    <div class="py-4 px-5" style="height: 100vh; width: 45vw; display: flex; flex-direction: column; align-items: start; justify-content: center">
+      <h2 class="pb-3">Register</h2>
+      <form class="pt-2" style="width: 330px;" action="{% url 'register' %}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+              <input class="form-control rounded-pill px-3" autofocus type="text" name="username" placeholder="Username">
+          </div>
+          <div class="form-group">
+              <input class="form-control rounded-pill px-3" type="email" name="email" placeholder="Email Address">
+          </div>
+          <div class="form-group">
+              <input class="form-control rounded-pill px-3" type="password" name="password" placeholder="Password">
+          </div>
+          <div class="form-group">
+              <input class="form-control rounded-pill px-3" type="password" name="confirmation" placeholder="Confirm Password">
+          </div>
+          <input class="btn btn-secondary btn-lg rounded-pill px-4 py-2 w-100" type="submit" value="Register">
+      </form>
+      <p style="margin-top: 20px; font-size: 18px">Already have an account?</p> 
+      <a href="{% url 'login' %}"><button class="btn btn-secondary btn-lg rounded-pill px-4 py-2" style="width: 330px;">Log In here.</button></a>
+    </div>
+  </div>
+{% endblock %}

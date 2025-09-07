@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Advanced-Search</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+      <div class="ad-nav">
+        <img class="nav-logo" src="./img/Google_2015_logo.png" alt="Google logo" height="24">
+        <ul class="nav">
+          <li class="nav-item"><a href="index.html">Google Search</a></li>
+          <li class="nav-item"><a href="image.html">Image Search</a></li>
+        </ul>
+      </div>
+      <p class="ad-title">Advanced Search</p>
+      <div class="line"></div>
+      <div class="ad-body">
+        <form action="https://google.com/search" method="GET" name="f">
+          <div class="ad-div1">
+            <div class="ad-div2">
+              <div class="ad-div3">
+                <div class="ad-div4">
+                  <span>Find pages with...</span>
+                </div>
+              </div>
+              <div class="space">&nbsp;</div>
+            </div>
+          </div>
+          <div class="ad-div1">
+            <div class="ad-div2">
+              <div class="words">
+                <div class="word">
+                  <label for="words">all these words:</label>
+                </div>
+              </div>
+              <div class="inputs">
+                <div class="input">
+                  <input class="textinput" type="text" name="as_q">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ad-div1">
+            <div class="ad-div2">
+              <div class="words">
+                <div class="word">
+                  <label for="words">this exact word or phrase:</label>
+                </div>
+              </div>
+              <div class="inputs">
+                <div class="input">
+                  <input class="textinput" type="text" name="as_epq">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ad-div1">
+            <div class="ad-div2">
+              <div class="words">
+                <div class="word">
+                  <label for="words">any of these words:</label>
+                </div>
+              </div>
+              <div class="inputs">
+                <div class="input">
+                  <input class="textinput" type="text" name="as_oq">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ad-div1">
+            <div class="ad-div2">
+              <div class="words">
+                <div class="word">
+                  <label for="words">none of these words:</label>
+                </div>
+              </div>
+              <div class="inputs">
+                <div class="input">
+                  <input class="textinput" type="text" name="as_eq">
+                </div>
+              </div>
+            </div>
+            <div class="ad-div2">
+              <div class="words"></div>
+              <div class="ad-button" style="text-align: right;">
+                <input name="tbs" type="hidden" value>
+                <input class="ad-button-action" style="line-height: 100%; height: 30px; min-width: 120px;" type="submit" value="Advanced Search">
+              </div>
+            </div>
+          </div>
+          <div class="line"></div>
+        </form>
+      </div>
+    </body>
+</html>
